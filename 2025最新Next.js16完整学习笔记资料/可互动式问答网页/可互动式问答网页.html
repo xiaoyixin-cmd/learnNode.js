@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next.js 16 可互动式问答网页</title>
+    <link rel="stylesheet" href="可互动式问答网页.css">
+</head>
+<body>
+    <!-- 首页 -->
+    <div id="homePage" class="page active">
+        <div class="container">
+            <h1 class="main-title">Next.js 16 知识问答</h1>
+            <p class="subtitle">选择一个阶段开始学习</p>
+            
+            <div class="stage-grid">
+                <div class="stage-card" data-stage="00-零基础篇">
+                    <h2>零基础篇</h2>
+                    <p>JavaScript、React、TypeScript基础</p>
+                    <div class="stage-info">
+                        <span class="question-count">50题</span>
+                    </div>
+                </div>
+                
+                <div class="stage-card" data-stage="01-架构篇">
+                    <h2>架构篇</h2>
+                    <p>App Router、Server Components、Turbopack</p>
+                    <div class="stage-info">
+                        <span class="question-count">50题</span>
+                    </div>
+                </div>
+                
+                <div class="stage-card" data-stage="02-路由篇">
+                    <h2>路由篇</h2>
+                    <p>动态路由、并行路由、拦截路由</p>
+                    <div class="stage-info">
+                        <span class="question-count">50题</span>
+                    </div>
+                </div>
+                
+                <div class="stage-card" data-stage="03-数据篇">
+                    <h2>数据篇</h2>
+                    <p>fetch API、缓存策略、数据获取</p>
+                    <div class="stage-info">
+                        <span class="question-count">50题</span>
+                    </div>
+                </div>
+                
+                <div class="stage-card" data-stage="05-API篇">
+                    <h2>API篇</h2>
+                    <p>Server Actions、Hooks、Middleware</p>
+                    <div class="stage-info">
+                        <span class="question-count">50题</span>
+                    </div>
+                </div>
+                
+                <div class="stage-card" data-stage="08-高级技巧篇">
+                    <h2>高级技巧篇</h2>
+                    <p>性能优化、SEO、安全策略</p>
+                    <div class="stage-info">
+                        <span class="question-count">50题</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 答题页面 -->
+    <div id="quizPage" class="page">
+        <div class="container">
+            <!-- 顶部信息栏 -->
+            <div class="quiz-header">
+                <button id="backToHome" class="btn-back">返回首页</button>
+                <div class="quiz-info">
+                    <span id="currentStage" class="stage-name"></span>
+                    <span id="questionProgress" class="progress-text"></span>
+                    <span id="accuracy" class="accuracy-text"></span>
+                </div>
+            </div>
+
+            <!-- 题目卡片 -->
+            <div id="questionCard" class="question-card">
+                <div class="question-header">
+                    <span id="questionType" class="question-type"></span>
+                    <div id="questionTags" class="question-tags"></div>
+                </div>
+                
+                <h2 id="questionText" class="question-text"></h2>
+                
+                <div id="optionsContainer" class="options-container"></div>
+                
+                <!-- 答题反馈 -->
+                <div id="feedback" class="feedback hidden">
+                    <div class="feedback-result"></div>
+                    <div class="feedback-explanation">
+                        <div id="explanationContent" class="explanation-content"></div>
+                    </div>
+                </div>
+                
+                <!-- 下一题按钮 -->
+                <button id="nextQuestion" class="btn-next hidden">下一题</button>
+            </div>
+
+            <!-- 完成页面 -->
+            <div id="completionCard" class="completion-card hidden">
+                <h2>恭喜完成</h2>
+                <div class="completion-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">总题数</span>
+                        <span id="totalQuestions" class="stat-value"></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">正确数</span>
+                        <span id="correctCount" class="stat-value"></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">正确率</span>
+                        <span id="finalAccuracy" class="stat-value"></span>
+                    </div>
+                </div>
+                <div class="completion-actions">
+                    <button id="restartQuiz" class="btn-primary">重新开始</button>
+                    <button id="backToHomeFromCompletion" class="btn-secondary">返回首页</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="可互动式问答网页.js"></script>
+</body>
+</html>
+
