@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js 可互动式问答网页</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 主页面 -->
+    <div id="homePage" class="page active">
+        <div class="container">
+            <header class="header">
+                <h1 class="title">Node.js 可互动式问答网页</h1>
+                <p class="subtitle">基于2025年最新Node.js完整学习资料设计的交互式题库系统</p>
+            </header>
+
+            <div class="stages-grid">
+                <div class="stage-card" data-stage="1">
+                    <div class="stage-number">01</div>
+                    <h3 class="stage-title">基础入门</h3>
+                    <p class="stage-description">Node.js基础概念、环境搭建、核心模块、异步编程等基础知识</p>
+                    <div class="stage-stats">
+                        <span class="question-count">50+ 题目</span>
+                        <span class="difficulty easy">入门级</span>
+                    </div>
+                    <button class="start-btn" data-stage="1">开始答题</button>
+                </div>
+
+                <div class="stage-card" data-stage="2">
+                    <div class="stage-number">02</div>
+                    <h3 class="stage-title">进阶入门</h3>
+                    <p class="stage-description">Web框架、数据库操作、身份认证、缓存策略、Docker容器化</p>
+                    <div class="stage-stats">
+                        <span class="question-count">50+ 题目</span>
+                        <span class="difficulty medium">进阶级</span>
+                    </div>
+                    <button class="start-btn" data-stage="2">开始答题</button>
+                </div>
+
+                <div class="stage-card" data-stage="3">
+                    <div class="stage-number">03</div>
+                    <h3 class="stage-title">高阶精进</h3>
+                    <p class="stage-description">性能监控、微服务架构、分布式系统、Serverless、DevOps</p>
+                    <div class="stage-stats">
+                        <span class="question-count">50+ 题目</span>
+                        <span class="difficulty hard">高级</span>
+                    </div>
+                    <button class="start-btn" data-stage="3">开始答题</button>
+                </div>
+
+                <div class="stage-card" data-stage="4">
+                    <div class="stage-number">04</div>
+                    <h3 class="stage-title">面试与实战</h3>
+                    <p class="stage-description">常见面试题、项目实战、代码优化、架构设计、最佳实践</p>
+                    <div class="stage-stats">
+                        <span class="question-count">50+ 题目</span>
+                        <span class="difficulty expert">专家级</span>
+                    </div>
+                    <button class="start-btn" data-stage="4">开始答题</button>
+                </div>
+
+                <div class="stage-card" data-stage="5">
+                    <div class="stage-number">05</div>
+                    <h3 class="stage-title">源码解析与内核探秘</h3>
+                    <p class="stage-description">V8引擎、libuv、事件循环、内存管理、性能优化、源码分析</p>
+                    <div class="stage-stats">
+                        <span class="question-count">50+ 题目</span>
+                        <span class="difficulty expert">专家级</span>
+                    </div>
+                    <button class="start-btn" data-stage="5">开始答题</button>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; 2025 Node.js 学习资料 | 交互式问答系统</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- 答题页面 -->
+    <div id="quizPage" class="page">
+        <div class="container">
+            <!-- 顶部状态栏 -->
+            <div class="quiz-header">
+                <button class="back-btn" id="back-home">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    返回首页
+                </button>
+                
+                <div class="quiz-progress">
+                    <div class="stage-info">
+                        <span id="currentStage">阶段一：基础入门</span>
+                    </div>
+                    <div class="progress-info">
+                        <span id="questionProgress">1 / 50</span>
+                        <span class="separator">|</span>
+                        <span id="accuracy">正确率: 0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 进度条 -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <!-- 题目区域 -->
+            <div class="question-container">
+                <div class="question-header">
+                    <div class="question-type" id="questionType">单选题</div>
+                    <div class="question-tags" id="questionTags"></div>
+                </div>
+                
+                <div class="question-content">
+                    <h2 class="question-title" id="questionTitle">题目加载中...</h2>
+                </div>
+
+                <div class="options-container" id="optionsContainer">
+                    <!-- 选项将通过JavaScript动态生成 -->
+                </div>
+
+                <!-- 答案解析区域 -->
+                <div class="explanation-container" id="explanationContainer" style="display: none;">
+                    <div class="explanation-header">
+                        <h3>答案解析</h3>
+                        <button class="toggle-explanation" onclick="toggleExplanation()">
+                            <span id="toggleText">展开</span>
+                            <svg id="toggleIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div class="explanation-content" id="explanationContent">
+                        <div class="correct-answer" id="correctAnswer"></div>
+                        <div class="explanation-text" id="explanationText"></div>
+                    </div>
+                </div>
+
+                <!-- 下一题按钮 -->
+                <div class="next-container" id="nextContainer" style="display: none;">
+                    <button class="next-btn" id="next-btn">下一题</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 结果页面 -->
+    <div id="resultPage" class="page">
+        <div class="container">
+            <div class="result-container">
+                <h2 class="result-title">答题完成！</h2>
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="finalScore">0</span>
+                        <span class="stat-label">总分</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="finalAccuracy">0%</span>
+                        <span class="stat-label">正确率</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalQuestions">0</span>
+                        <span class="stat-label">题目总数</span>
+                    </div>
+                </div>
+                
+                <div class="result-actions">
+                    <button class="restart-btn" id="restart-btn">重新开始</button>
+                    <button class="home-btn" id="home-btn">返回首页</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 先加载所有题库文件 -->
+    <script src="questions-stage1.js"></script>
+    <script src="questions-stage2.js"></script>
+    <script src="questions-stage3.js"></script>
+    <script src="questions-stage4.js"></script>
+    <script src="questions-stage5.js"></script>
+    <!-- 然后加载题库汇总文件 -->
+    <script src="questions.js"></script>
+    <!-- 最后加载主脚本 -->
+    <script src="script.js"></script>
+</body>
+</html>
